@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+
+	<style type="text/css">
+
+		body {
+			margin-left: 300px;
+			margin-top: 50px;
+			background-color: #374151;
+		}
+
+		.upperDiv {
+			display: flex;
+		}
+
+		.inp {
+			padding-right: 370px;
+			padding-top: 20px;
+			padding-bottom: 20px;
+			padding-left: 20px;
+			border-radius: 15px;
+			border : none;
+			background-color: #1F2937;
+			outline: none;
+			color: white;
+			font-weight: bold;
+			font-size: 17px;
+		}
+
+		.add {
+			border: none;
+			color: #EC4899;
+			background-color: #374151;
+			font-size: 30px;
+			cursor: pointer;
+			margin-left: 15px;
+		}
+
+		.container {
+           display: flex;
+        }
+
+		.delete {
+			border: none;
+			background-color: #111827;
+			font-size: 20px;
+			font-weight: bold;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			padding-right: 20px;
+			border-top-right-radius: 15px;
+			border-bottom-right-radius: 15px ;
+			cursor: pointer;
+			color: crimson;
+		}
+
+		.edit {
+	        border: none;
+			background-color: #111827;
+			font-size: 20px;
+			font-weight: bold;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			width: 100px;
+			cursor: pointer;
+			color: #8B5CF6;
+		}
+		
+		.nonInteractiveInputProperties {
+			pointer-events: none;
+			border: none;
+			padding-right: 250px;
+			padding-top: 20px;
+			padding-bottom: 20px;
+			padding-left: 20px;
+			border-top-left-radius: 15px;
+			border-bottom-left-radius: 15px;
+			background-color: #111827;
+			outline: none;
+			color: white;
+			font-size: 17px;
+		}
+		.interactiveInputProperties {
+			pointer-events: auto;
+			border: none;
+			padding-right: 250px;
+			padding-top: 20px;
+			padding-bottom: 20px;
+			padding-left: 20px;
+			border-top-left-radius: 15px;
+			border-bottom-left-radius: 15px;
+			background-color: #111827;
+			outline: none;
+			color: white;
+			font-size: 17px;
+		}
+
+	</style>
+
+</head>
+<body>
+
+	<div class="upperDiv">
+
+	   <input class="inp" placeholder="Create To-Do">
+
+	   <button class="add">Add</button>
+
+   </div>
+
+   <p></p>
+
+
+   <script type="text/javascript">
+   	
+   		let todos = [];
+
+   		let ToDo = {
+   			creation : function() {
+
+   				let newToDo = {
+   					input : document.createElement('input'),
+   					editButton : document.createElement('button'),
+   					deleteButton : document.createElement('button'),
+   					//editButton : document.createElement('button'),	
+   					container : document.createElement('div')
+   				};
+
+
+   				newToDo.input.classList.add('nonInteractiveInputProperties');
+   				newToDo.input.value = document.querySelector('.inp').value;
+   				//document.body.appendChild(newToDo.input);
+   				//newToDo.container.appendChild(newToDo.input);
+
+   				newToDo.editButton.classList.add('edit');
+   				newToDo.editButton.innerHTML= 'EDIT';
+   				//document.body.appendChild(newToDo.editButton);
+
+   				newToDo.deleteButton.classList.add('delete');
+   				newToDo.deleteButton.innerHTML = 'DELETE';
+   				//document.body.appendChild(newToDo.deleteButton);
+   				//newToDo.container.appendChild(newToDo.deleteButton);
+
+   				//newToDo.editButton.classList.add('edit');
+   				//newToDo.editButton.innerHTML= 'Edit';
+   				//document.body.appendChild(newToDo.editButton);
+
+   				newToDo.container.appendChild(newToDo.input);
+   				newToDo.container.appendChild(newToDo.editButton);
+   				newToDo.container.appendChild(newToDo.deleteButton);
+   				//newToDo.container.appendChild(newToDo.editButton);
+
+
+   				newToDo.container.classList.add('container');
+   				document.body.appendChild(newToDo.container);
+
+
+   				todos.push(newToDo);
+
+   				console.log(newToDo);
+
+
+   				let boolean = true;
+   				newToDo.deleteButton.addEventListener('click', function() { /*newToDo.input.remove();
+   				                                                            newToDo.deleteButton.remove();
+   				                                                            newToDo.editButton.remove();*/
+   				                                                            newToDo.container.remove();
+   				                                                            todos.splice(newToDo); });
+   				newToDo.editButton.addEventListener('click', function() { if (boolean === true) {
+   																									newToDo.input.classList.remove('nonInteractiveInputProperties');
+   																									newToDo.input.classList.add('interactiveInputProperties');
+   																									newToDo.editButton.innerHTML = 'SAVE';
+
+   																									boolean = false;
+   				                                                                                 } else if (boolean === false) {
+   				                                                                                 	newToDo.input.classList.remove('interactiveInputProperties');
+   																									newToDo.input.classList.add('nonInteractiveInputProperties');
+   																									newToDo.editButton.innerHTML = 'EDIT';
+
+   																									boolean = true;
+   				                                                                                 } });
+
+
+   			}
+   		};
+
+
+   		let addButton = document.querySelector('.add');
+   		addButton.addEventListener('click', function() { let a = document.createElement('p');
+   			                                             document.body.appendChild(a);
+   			                                             ToDo.creation();
+   			                                             document.querySelector('.inp').value = ''; });
+
+
+   		let mainInput = document.querySelector('.inp');
+   		mainInput.addEventListener('keydown', function() { if (event.key === 'Enter') {
+   																						ToDo.creation(); 
+   			                                                                            let a = document.createElement('p');
+   			                                                                            document.body.appendChild(a);
+   			                                                                            document.querySelector('.inp').value = ''; }});
+   		                                                                                                                               
+
+   </script>
+
+</body>
+</html>
